@@ -22,7 +22,7 @@ function Homepage() {
     if (user) navigate("/chats");
   }, [navigate]);
 
-  return (
+  return(
     <Container maxW="xl" centerContent>
       <Box
         display="flex"
