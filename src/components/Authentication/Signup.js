@@ -102,10 +102,9 @@ const Signup = () => {
       data.append("file", pics);
       data.append("upload_preset", "ConnectMe");
       data.append("cloud_name", "bhumik47");
-      fetch("https://api.cloudinary.com/v1_1/bhumik47", {
+      fetch("https://api.cloudinary.com/v1_1/bhumik47/image/upload", {
         method: "post",
         body: data,
-        mode:"no-cors"
       })
         .then((res) => res.json())
         .then((data) => {
