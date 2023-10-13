@@ -105,6 +105,7 @@ const Signup = () => {
       fetch("https://api.cloudinary.com/v1_1/bhumik47", {
         method: "post",
         body: data,
+        mode:"no-cors"
       })
         .then((res) => res.json())
         .then((data) => {
