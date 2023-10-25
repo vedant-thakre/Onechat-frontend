@@ -28,7 +28,7 @@ const GroupChatModal = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const toast = useToast();
 
-  const { user, chats, setChats } = ChatState();
+  const { user, chats, setChats, mode } = ChatState();
 
   const handleGroup = (userToAdd) => {
     if (selectedUsers.includes(userToAdd)) {
@@ -132,9 +132,18 @@ const GroupChatModal = ({ children }) => {
     <>
       <span onClick={onOpen}>{children}</span>
 
-      <Modal onClose={onClose} isOpen={isOpen} isCentered>
+      <Modal
+        onClose={onClose}
+        isOpen={isOpen}
+        isCentered
+        bg={mode ? "#30373d" : ""}
+        color={mode ? "#efefef" : "black"}
+      >
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent
+          bg={mode ? "#30373d" : "white"}
+          color={mode ? "#efefef" : "black"}
+        >
           <ModalHeader
             fontSize="35px"
             fontFamily="Work sans"
@@ -143,7 +152,9 @@ const GroupChatModal = ({ children }) => {
           >
             Create Group Chat
           </ModalHeader>
-          <ModalCloseButton />
+          <ModalCloseButton
+            _hover={{ backgroundColor: mode ? "#49525b" : "#f0f0f0" }}
+          />
           <ModalBody display="flex" flexDir="column" alignItems="center">
             <FormControl>
               <Input
@@ -154,7 +165,7 @@ const GroupChatModal = ({ children }) => {
             </FormControl>
             <FormControl>
               <Input
-                placeholder="Add Users eg: John, Bhumik, Jane"
+                placeholder="Add Users eg: John, Vedant, Jane"
                 mb={1}
                 onChange={(e) => handleSearch(e.target.value)}
               />
@@ -184,7 +195,12 @@ const GroupChatModal = ({ children }) => {
             )}
           </ModalBody>
           <ModalFooter>
-            <Button onClick={handleSubmit} colorScheme="blue">
+            <Button
+              onClick={handleSubmit}
+              bg="#38B2AC"
+              color="white"
+              _hover={{ backgroundColor: "#3fc7c1" }}
+            >
               Create Chat
             </Button>
           </ModalFooter>

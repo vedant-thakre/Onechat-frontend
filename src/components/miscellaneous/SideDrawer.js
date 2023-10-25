@@ -31,6 +31,11 @@ import { Effect } from "react-notification-badge";
 import { getSender } from "../../config/ChatLogics";
 import UserListItem from "../userAvatar/UserListItem";
 import { ChatState } from "../../Context/ChatProvider";
+import { Image } from "@chakra-ui/react";
+import LogoLight from "../../assets/Lightlogo.png";
+import LogoDark from "../../assets/Darklogo.png";
+import Dark from "../../assets/dark.png";
+import Light from "../../assets/light.png";
 
 function SideDrawer() {
   const [search, setSearch] = useState("");
@@ -45,6 +50,8 @@ function SideDrawer() {
     setNotification,
     chats,
     setChats,
+    mode,
+    setMode,
   } = ChatState();
 
   const toast = useToast();
@@ -135,36 +142,94 @@ function SideDrawer() {
         display="flex"
         justifyContent="space-between"
         alignItems="center"
-        bg="white"
+        bg={mode ? "#212529" : "white"}
         w="100%"
-        p="5px 10px 5px 10px"
+        px={{ base: "0px", sm: "5px", md: "10x" }}
+        p="5px 0px 5px 0px"
         borderWidth="5px"
+        borderRadius="0px 0px 10px 10px"
+        style={{ borderColor: mode ? "#1a1d20" : "#d2d2d2" }}
       >
         <Tooltip label="Search Users to chat" hasArrow placement="bottom-end">
-          <Button variant="ghost" onClick={onOpen}>
-            <i className="fas fa-search"></i>
-            <Text display={{ base: "none", md: "flex" }} px={4}>
+          <Button
+            variant="ghost"
+            onClick={onOpen}
+            px={{ base: 0, sm: 3 }}
+            _hover={{ backgroundColor: mode ? "#282c31" : "#f0f0f0" }}
+          >
+            <i
+              className="fas fa-search"
+              style={{ color: mode ? "#DADADA" : "black" }}
+            />
+            <Text
+              display={{ base: "none", md: "flex" }}
+              px={{ base: 2, sm: 3, md: 4 }}
+              color={mode ? "white" : "black"}
+            >
               Search User
             </Text>
           </Button>
         </Tooltip>
-        <Text fontSize="2xl" fontFamily="Work sans">
-          ConnectMe
-        </Text>
-        <div>
+        <Image
+          w={{
+            base: "7.5em",
+            sm: "11em",
+            md: "13em",
+            lg: "14em",
+            xl: "14em",
+          }}
+          src={mode ? LogoLight : LogoDark}
+          alt="Logo"
+          mb={1.5}
+        />
+        <div style={{ display: "flex", alignItems: "center" }}>
+          {mode ? (
+            <Image
+              src={Light}
+              mx={{ base: "10px", sm: "5px" }}
+              alt="light"
+              w={"25px"}
+              cursor={"pointer"}
+              onClick={() => {
+                setMode((prev) => !prev);
+              }}
+            />
+          ) : (
+            <Image
+              src={Dark}
+              mx={{ base: "1px", sm: "5px", md: "5px" }}
+              alt="light"
+              w={"25px"}
+              cursor={"pointer"}
+              onClick={() => {
+                setMode((prev) => !prev);
+              }}
+            />
+          )}
           <Menu>
             <MenuButton p={1}>
               <NotificationBadge
                 count={notification.length}
                 effect={Effect.SCALE}
               />
-              <BellIcon fontSize="2xl" m={1} />
+              <BellIcon
+                fontSize="2xl"
+                m={1}
+                color={mode ? "#DADADA" : "black"}
+              />
             </MenuButton>
-            <MenuList pl={2}>
+            <MenuList
+              pl={2.5}
+              bg={mode ? "#212529" : "white"}
+              style={{ borderColor: mode ? "#495057" : "#d2d2d2" }}
+            >
               {!notification.length && "No New Messages"}
               {notification.map((notif) => (
                 <MenuItem
                   key={notif._id}
+                  bg={mode ? "#212529" : "white"}
+                  color={mode ? "white" : "black"}
+                  _hover={{ backgroundColor: mode ? "#343a40" : "#f0f0f0" }}
                   onClick={() => {
                     setSelectedChat(notif.chat);
                     setNotification(notification.filter((n) => n !== notif));
@@ -178,7 +243,14 @@ function SideDrawer() {
             </MenuList>
           </Menu>
           <Menu>
-            <MenuButton as={Button} bg="white" rightIcon={<ChevronDownIcon />}>
+            <MenuButton
+              px={{ base: 1, md: 4, sm: 3 }}
+              as={Button}
+              bg={mode ? "#212529" : "white"}
+              _hover={{ backgroundColor: mode ? "#282c31" : "#f0f0f0" }}
+              _expanded={{ bg: mode ? "#282c31" : "#f0f0f0" }}
+              rightIcon={<ChevronDownIcon color={mode ? "#DADADA" : "black"} />}
+            >
               <Avatar
                 size="sm"
                 cursor="pointer"
@@ -186,20 +258,44 @@ function SideDrawer() {
                 src={user.pic}
               />
             </MenuButton>
-            <MenuList>
+            <MenuList
+              bg={mode ? "#212529" : "white"}
+              style={{ borderColor: mode ? "#495057" : "#d2d2d2" }}
+            >
               <ProfileModal user={user}>
-                <MenuItem>My Profile</MenuItem>{" "}
+                <MenuItem
+                  bg={mode ? "#212529" : "white"}
+                  color={mode ? "white" : "black"}
+                  _hover={{ backgroundColor: mode ? "#343a40" : "#f0f0f0" }}
+                >
+                  My Profile
+                </MenuItem>{" "}
               </ProfileModal>
               <MenuDivider />
-              <MenuItem onClick={logoutHandler}>Logout</MenuItem>
+              <MenuItem
+                onClick={logoutHandler}
+                bg={mode ? "#212529" : "white"}
+                color={mode ? "white" : "black"}
+                _hover={{ backgroundColor: mode ? "#343a40" : "#f0f0f0" }}
+              >
+                Logout
+              </MenuItem>
             </MenuList>
           </Menu>
         </div>
       </Box>
 
-      <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
+      <Drawer
+        placement="left"
+        onClose={onClose}
+        isOpen={isOpen}
+        bg={mode ? "#343a40" : "white"}
+      >
         <DrawerOverlay />
-        <DrawerContent>
+        <DrawerContent
+          bg={mode ? "#343a40" : "white"}
+          color={mode ? "white" : "black"}
+        >
           <DrawerHeader borderBottomWidth="1px">Search Users</DrawerHeader>
           <DrawerBody>
             <Box display="flex" pb={2}>
@@ -209,7 +305,14 @@ function SideDrawer() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
-              <Button onClick={handleSearch}>Go</Button>
+              <Button
+                onClick={handleSearch}
+                bg={mode ? "#272c31" : ""}
+                color={mode ? "#efefef" : "black"}
+                _hover={{ backgroundColor: mode ? "#49525b" : "#f0f0f0" }}
+              >
+                Go
+              </Button>
             </Box>
             {loading ? (
               <ChatLoading />

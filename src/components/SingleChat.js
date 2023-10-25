@@ -11,6 +11,7 @@ import ProfileModal from "./miscellaneous/ProfileModal";
 import ScrollableChat from "./ScrollableChat";
 import Lottie from "react-lottie";
 import animationData from "../animations/typing.json";
+import { Button } from "@chakra-ui/button";
 
 import io from "socket.io-client";
 import UpdateGroupChatModal from "./miscellaneous/UpdateGroupChatModal";
@@ -69,6 +70,41 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       });
     }
   };
+
+    const sendUsingButton = async () => {
+      if (newMessage) {
+        socket.emit("stop typing", selectedChat._id);
+        try {
+          const config = {
+            headers: {
+              "Content-type": "application/json",
+              Authorization: `Bearer ${user.token}`,
+            },
+          };
+          setNewMessage("");
+          const { data } = await axios.post(
+            "http://localhost:5002/api/message",
+            {
+              content: newMessage,
+              chatId: selectedChat._id,
+            },
+            config
+          );
+          console.log(data);
+          socket.emit("new message", data);
+          setMessages([...messages, data]);
+        } catch (error) {
+          toast({
+            title: "Error Occured!",
+            description: "Failed to send the Message",
+            status: "error",
+            duration: 5000,
+            isClosable: true,
+            position: "bottom",
+          });
+        }
+      }
+    };
 
   const sendMessage = async (event) => {
     if (event.key === "Enter" && newMessage) {
@@ -174,7 +210,10 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             alignItems="center"
           >
             <IconButton
-              d={{ base: "flex", md: "none" }}
+              display={{ base: "flex", md: "none" }}
+              bg={mode ? "#272c31" : ""}
+              color={mode ? "#efefef" : "black"}
+              _hover={{ backgroundColor: mode ? "#49525b" : "#f0f0f0" }}
               icon={<ArrowBackIcon />}
               onClick={() => setSelectedChat("")}
             />
@@ -202,7 +241,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             flexDir="column"
             justifyContent="flex-end"
             p={3}
-            bg="#E8E8E8"
+            bg={mode ? "#1a1d20" : "#dddddd"}
             w="100%"
             h="100%"
             borderRadius="lg"
@@ -240,13 +279,24 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
               ) : (
                 <></>
               )}
-              <Input
-                variant="filled"
-                bg="#E0E0E0"
-                placeholder="Enter a message.."
-                value={newMessage}
-                onChange={typingHandler}
-              />
+              <div style={{ display: "flex", gap: "10px" }}>
+                <Input
+                  variant="filled"
+                  bg={mode ? "#343a40" : "#E0E0E0"}
+                  placeholder="Enter a message.."
+                  _hover={{ backgroundColor: mode ? "#444a52" : "#f0f0f0" }}
+                  value={newMessage}
+                  onChange={typingHandler}
+                />
+                <Button
+                  bg="#38B2AC"
+                  color="white"
+                  _hover={{ backgroundColor: "#3fc7c1" }}
+                  onClick={sendUsingButton}
+                >
+                  Send
+                </Button>
+              </div>
             </FormControl>
           </Box>
         </>
