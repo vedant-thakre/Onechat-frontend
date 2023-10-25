@@ -3,9 +3,6 @@
 .App {
   min-height: 100vh;
   display: flex;
-  background-image: url("./—Pngtree—dark\ gray\ minimalist\ geometric\ background_728283.jpg");
-  background-position: center;
-  background-size: cover;
 }
 
 ::-webkit-scrollbar {
