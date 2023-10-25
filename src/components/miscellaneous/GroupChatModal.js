@@ -59,7 +59,7 @@ const GroupChatModal = ({ children }) => {
         },
       };
       const { data } = await axios.get(
-        `http://localhost:5050/api/user?search=${search}`,
+        `https://onechat-oeah.onrender.com/api/user?search=${search}`,
         config
       );
       console.log(data);
@@ -100,7 +100,7 @@ const GroupChatModal = ({ children }) => {
         },
       };
       const { data } = await axios.post(
-        `http://localhost:5050/api/chat/group`,
+        `https://onechat-oeah.onrender.com/api/chat/group`,
         {
           name: groupChatName,
           users: JSON.stringify(selectedUsers.map((u) => u._id)),

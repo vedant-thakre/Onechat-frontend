@@ -78,7 +78,7 @@ function SideDrawer() {
       };
 
       const { data } = await axios.get(
-        `http://localhost:5050/api/user?search=${search}`,
+        `https://onechat-oeah.onrender.com/api/user?search=${search}`,
         config
       );
 
@@ -108,7 +108,7 @@ function SideDrawer() {
         },
       };
       const { data } = await axios.post(
-        `http://localhost:5050/api/chat`,
+        `https://onechat-oeah.onrender.com/api/chat`,
         { userId },
         config
       );

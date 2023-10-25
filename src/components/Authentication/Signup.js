@@ -51,7 +51,7 @@ const Signup = () => {
         },
       };
       const { data } = await axios.post(
-        "http://localhost:5050/api/user",
+        "https://onechat-oeah.onrender.com/api/user",
         {
           name,
           email,
