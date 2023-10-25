@@ -51,7 +51,7 @@ const Signup = () => {
         },
       };
       const { data } = await axios.post(
-        "https://connectme-pdo8.onrender.com/api/user",
+        "http://localhost:5050/api/user",
         {
           name,
           email,

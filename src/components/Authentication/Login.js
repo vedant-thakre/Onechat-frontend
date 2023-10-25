@@ -41,7 +41,7 @@ const Login = () => {
       };
 
       const { data } = await axios.post(
-        "https://connectme-pdo8.onrender.com/api/user/login",
+        "http://localhost:5050/api/user/login",
         { email, password },
         config
       );

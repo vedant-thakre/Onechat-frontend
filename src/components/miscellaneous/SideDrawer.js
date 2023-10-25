@@ -77,7 +77,10 @@ function SideDrawer() {
         },
       };
 
-      const { data } = await axios.get(`https://connectme-pdo8.onrender.com/api/user?search=${search}`, config);
+      const { data } = await axios.get(
+        `http://localhost:5050/api/user?search=${search}`,
+        config
+      );
 
       setLoading(false);
       setSearchResult(data);
@@ -104,7 +107,11 @@ function SideDrawer() {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.post(`https://connectme-pdo8.onrender.com/api/chat`, { userId }, config);
+      const { data } = await axios.post(
+        `http://localhost:5050/api/chat`,
+        { userId },
+        config
+      );
 
       if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
       setSelectedChat(data);
