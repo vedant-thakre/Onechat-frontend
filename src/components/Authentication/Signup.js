@@ -185,7 +185,32 @@ const Signup = () => {
           onChange={(e) => postDetails(e.target.files[0])}
         />
       </FormControl>
-      <Button
+      <button
+        style={{
+          backgroundColor: "#3c3c3c",
+          borderRadius: "5px",
+          width: "100%",
+          color: "white",
+          marginTop: "15px",
+          padding: "7px",
+          fontSize: "19px",
+          fontWeight: "500",
+          cursor: "pointer",
+        }}
+        onClick={submitHandler}
+        isLoading={picLoading}
+        onMouseOver={(e) => {
+          // Change the background color on hover
+          e.target.style.backgroundColor = "#575757";
+        }}
+        onMouseOut={(e) => {
+          // Restore the original background color on hover out
+          e.target.style.backgroundColor = "#3c3c3c";
+        }}
+      >
+        Sign Up
+      </button>
+      {/* <Button
         colorScheme="blue"
         width="100%"
         style={{ marginTop: 15 }}
@@ -193,7 +218,7 @@ const Signup = () => {
         isLoading={picLoading}
       >
         Sign Up
-      </Button>
+      </Button> */}
     </VStack>
   );
 };

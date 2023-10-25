@@ -97,7 +97,60 @@ const Login = () => {
           </InputRightElement>
         </InputGroup>
       </FormControl>
-      <Button
+      <button
+        className="loginButtons"
+        style={{
+          backgroundColor: "#3c3c3c",
+          borderRadius: "5px",
+          width: "100%",
+          marginTop: "15px",
+          color: "white",
+          padding: "7px",
+          fontSize: "19px",
+          fontWeight: "500",
+          cursor: "pointer",
+        }}
+        onClick={submitHandler}
+        isLoading={loading}
+        onMouseOver={(e) => {
+          // Change the background color on hover
+          e.target.style.backgroundColor = "#575757";
+        }}
+        onMouseOut={(e) => {
+          // Restore the original background color on hover out
+          e.target.style.backgroundColor = "#3c3c3c";
+        }}
+      >
+        Login
+      </button>
+      <button
+        className="loginButtons"
+        style={{
+          backgroundColor: "#3c3c3c",
+          borderRadius: "5px",
+          width: "100%",
+          color: "white",
+          padding: "7px",
+          fontSize: "19px",
+          fontWeight: "500",
+          cursor: "pointer",
+        }}
+        onClick={() => {
+          setEmail("guest@example.com");
+          setPassword("1234");
+        }}
+        onMouseOver={(e) => {
+          // Change the background color on hover
+          e.target.style.backgroundColor = "#575757";
+        }}
+        onMouseOut={(e) => {
+          // Restore the original background color on hover out
+          e.target.style.backgroundColor = "#3c3c3c";
+        }}
+      >
+        Get Guest User Credentials
+      </button>
+      {/* <Button
         colorScheme="blue"
         width="100%"
         style={{ marginTop: 15 }}
@@ -116,7 +169,7 @@ const Login = () => {
         }}
       >
         Get Guest User Credentials
-      </Button>
+      </Button> */}
     </VStack>
   );
 };
