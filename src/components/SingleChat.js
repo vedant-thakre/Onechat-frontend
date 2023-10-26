@@ -195,6 +195,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     }, timerLength);
   };
 
+  const [isLargerThan640] = useMediaQuery("(min-width: 640px)");
+
   return (
     <>
       {selectedChat ? (
