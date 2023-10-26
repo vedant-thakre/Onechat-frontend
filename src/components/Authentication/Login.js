@@ -58,6 +58,7 @@ const Login = () => {
       setLoading(false);
       navigate("/chats");
     } catch (error) {
+      console.log(error);
       toast({
         title: "Error Occured!",
         description: error.response.data.message,
@@ -150,6 +151,7 @@ const Login = () => {
       >
         Get Guest User Credentials
       </button>
+
       {/* <Button
         colorScheme="blue"
         width="100%"

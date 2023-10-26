@@ -12,12 +12,13 @@ import ScrollableChat from "./ScrollableChat";
 import Lottie from "react-lottie";
 import animationData from "../animations/typing.json";
 import { Button } from "@chakra-ui/button";
+import { useMediaQuery } from "@chakra-ui/react";
 
 import io from "socket.io-client";
 import UpdateGroupChatModal from "./miscellaneous/UpdateGroupChatModal";
 import { ChatState } from "../Context/ChatProvider";
 const ENDPOINT = "https://onechat-oeah.onrender.com"; // "https://talk-a-tive.herokuapp.com"; -> After deployment
-var socket, selectedChatCompare;
+var socket, selectedChatCompare; // https://onechat-oeah.onrender.com
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [messages, setMessages] = useState([]);
@@ -36,8 +37,14 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       preserveAspectRatio: "xMidYMid slice",
     },
   };
-  const { selectedChat, setSelectedChat, user, notification, setNotification, mode } =
-    ChatState();
+  const {
+    selectedChat,
+    setSelectedChat,
+    user,
+    notification,
+    setNotification,
+    mode,
+  } = ChatState();
 
   const fetchMessages = async () => {
     if (!selectedChat) return;
@@ -71,40 +78,40 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     }
   };
 
-    const sendUsingButton = async () => {
-      if (newMessage) {
-        socket.emit("stop typing", selectedChat._id);
-        try {
-          const config = {
-            headers: {
-              "Content-type": "application/json",
-              Authorization: `Bearer ${user.token}`,
-            },
-          };
-          setNewMessage("");
-          const { data } = await axios.post(
-            "http://localhost:5002/api/message",
-            {
-              content: newMessage,
-              chatId: selectedChat._id,
-            },
-            config
-          );
-          console.log(data);
-          socket.emit("new message", data);
-          setMessages([...messages, data]);
-        } catch (error) {
-          toast({
-            title: "Error Occured!",
-            description: "Failed to send the Message",
-            status: "error",
-            duration: 5000,
-            isClosable: true,
-            position: "bottom",
-          });
-        }
+  const sendUsingButton = async () => {
+    if (newMessage) {
+      socket.emit("stop typing", selectedChat._id);
+      try {
+        const config = {
+          headers: {
+            "Content-type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        };
+        setNewMessage("");
+        const { data } = await axios.post(
+          "https://onechat-oeah.onrender.com/api/message",
+          {
+            content: newMessage,
+            chatId: selectedChat._id,
+          },
+          config
+        );
+        console.log(data);
+        socket.emit("new message", data);
+        setMessages([...messages, data]);
+      } catch (error) {
+        toast({
+          title: "Error Occured!",
+          description: "Failed to send the Message",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom",
+        });
       }
-    };
+    }
+  };
 
   const sendMessage = async (event) => {
     if (event.key === "Enter" && newMessage) {
