@@ -288,14 +288,35 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                   value={newMessage}
                   onChange={typingHandler}
                 />
-                <Button
-                  bg="#38B2AC"
-                  color="white"
-                  _hover={{ backgroundColor: "#3fc7c1" }}
-                  onClick={sendUsingButton}
-                >
-                  Send
-                </Button>
+                {isLargerThan640 ? (
+                  <Button
+                    bg="#38B2AC"
+                    color="white"
+                    _hover={{ backgroundColor: "#3fc7c1" }}
+                    onClick={sendUsingButton}
+                  >
+                    Send
+                  </Button>
+                ) : (
+                  <Button
+                    bg="#38B2AC"
+                    color="white"
+                    _hover={{ backgroundColor: "#3fc7c1" }}
+                    onClick={sendUsingButton}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="m12.815 12.197l-7.532 1.255a.5.5 0 0 0-.386.318L2.3 20.728c-.248.64.421 1.25 1.035.942l18-9a.75.75 0 0 0 0-1.341l-18-9c-.614-.307-1.283.303-1.035.942l2.598 6.958a.5.5 0 0 0 .386.318l7.532 1.255a.2.2 0 0 1 0 .395Z"
+                      />
+                    </svg>
+                  </Button>
+                )}
               </div>
             </FormControl>
           </Box>
