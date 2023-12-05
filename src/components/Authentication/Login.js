@@ -4,7 +4,7 @@ import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
 import { VStack } from "@chakra-ui/layout";
 import { useState } from "react";
 import axios from "axios";
-import { useToast } from "@chakra-ui/react";
+import { Spinner, useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { ChatState } from "../../Context/ChatProvider";
 
@@ -122,7 +122,11 @@ const Login = () => {
           e.target.style.backgroundColor = "#3c3c3c";
         }}
       >
-        Login
+        {loading ? (
+          <Spinner size="md" w={6} h={6} marginTop={1} />
+        ) : (
+          <>Login</>
+        )}
       </button>
       <button
         className="loginButtons"
@@ -151,27 +155,6 @@ const Login = () => {
       >
         Get Guest User Credentials
       </button>
-
-      {/* <Button
-        colorScheme="blue"
-        width="100%"
-        style={{ marginTop: 15 }}
-        onClick={submitHandler}
-        isLoading={loading}
-      >
-        Login
-      </Button>
-      <Button
-        variant="solid"
-        colorScheme="red"
-        width="100%"
-        onClick={() => {
-          setEmail("guest@example.com");
-          setPassword("1234");
-        }}
-      >
-        Get Guest User Credentials
-      </Button> */}
     </VStack>
   );
 };
