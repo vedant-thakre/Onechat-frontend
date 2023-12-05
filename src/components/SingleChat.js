@@ -332,7 +332,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         </>
       ) : (
         // to get socket.io on same page
-        <Box
+        <Box       
           display="flex"
           alignItems="center"
           justifyContent="center"
